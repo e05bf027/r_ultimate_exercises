@@ -1,0 +1,37 @@
+---
+title: "mL06markdown"
+author: "David M Hannon"
+date: "26/12/2021"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_sections: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Word Processing
+
+You can format text in **bold** or *italic*. 
+
+You want to calculate exp(1). If written in plain text, it renders literally
+and directly as exp(1). We must put it in a code chunk.
+
+# Code Chunk
+
+```{r}
+exp(1)
+```
+
+# Plots
+
+```{r}
+library(plotly)
+data('volcano')
+plot_ly(z = volcano, type = 'surface')
+```
+
+
