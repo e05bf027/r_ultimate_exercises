@@ -1,0 +1,56 @@
+---
+title: "Data Resphaping: Exercise"
+author: "David Hannon"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_sections: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = T, warning = F, message = F)
+```
+
+# Data Preparation
+
+- Load the package "tidyverse".
+
+```{r}
+library(tidyverse)
+```
+
+- Load the data "population".
+
+- Inspect it by loading the first observations of this data.
+
+```{r}
+data("population")
+head(population)
+```
+
+# Data Reshaping
+
+- The data is shaped in a tidy format. Please change it to a wide format (rows represent countries, **columns represent years**, values represent population).
+
+```{r}
+pop_wide <- population %>% 
+  pivot_wider(names_from = 'year', # ie 'names of columns'
+              values_from = 'population') # ie 'values that will populate these columns'
+
+head(pop_wide)
+```
+
+- Now take the wide data and reshape it back to a tidy format. 
+
+```{r}
+
+pop_tidy <- pop_wide %>% 
+  pivot_longer(cols = !country, # what columns do you want to pivot longer
+               names_to = 'year', # what do you want to call this new column
+               values_to = 'population') # what values do you want to put in it
+
+head(pop_tidy)
+```
+
+

@@ -1,0 +1,80 @@
+---
+title: "mL09_BasicDataTypes"
+author: "David M Hannon"
+date: "27/12/2021"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    code_folding: show
+    number_sections: true
+---
+
+# Vector Creation
+
+Create double variables
+```{r}
+double_var <- c(2, 3.4, 7, 0, 9.99)
+```
+
+Integer variables
+
+```{r}
+integer_var <- c(1L, 5L, 82L)
+```
+
+Logical variables
+
+```{r}
+logic_var <- c(TRUE, FALSE, T, F)
+```
+
+Character variable
+
+```{r}
+character_var <- c('a', 'b', 'hello', '86')
+```
+
+# Types of vector (vector checking)
+
+Use the `typeof` command to check what type of data a vector is.
+
+```{r}
+typeof(character_var)
+typeof(logic_var)
+```
+
+Use `is.<VECTOR>` to check using a **logical output**.
+
+```{r}
+is.numeric(character_var)
+is.integer(integer_var)
+is.numeric(integer_var)   # integer and dbl are both numeric
+```
+
+# Type coercion
+
+If a vector has numerous data types within it, R will coerce them all to the 
+most flexible type that fits.
+
+**NB: logical > integer > numeric > complex > character**
+
+```{r}
+typeof(c(1L, 2L, 4))   # it is a double because they can ALL fit this data type 
+```
+
+You can cast one as another.
+
+```{r}
+as.integer(double_var)   # observe how it disregards all after a decimal point
+
+# the above can also be nested in another function
+as.logical(as.integer(double_var))
+```
+
+R will convert **if it can**. Otherwise, an NA is generated.
+
+```{r}
+as.numeric(character_var)
+```
+

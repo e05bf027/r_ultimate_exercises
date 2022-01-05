@@ -1,0 +1,173 @@
+---
+title: "Data Visualisation with ggplot2"
+author: "Bert Gollnick"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    code_folding: hide
+    number_sections: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = T, message = F, warning = F)
+```
+
+# Packages
+
+```{r}
+library(ggplot2)
+library(dplyr)
+```
+
+# Data Preparation
+
+```{r}
+data("diamonds")
+diamonds %>% glimpse()
+```
+
+# One Variable
+
+## Discrete 
+
+The grammar, in its basic form, can be understood as follows:
+
+- the **first bracket** contains information on 1) the `data` to be used, 2) the aesthetics (i.e. what variable is mapped top each axis, how colours will be assigned, etc.)
+- the **second bracket** contains instructions for the software to display a layer consisting of the actual graphic using the info mapped from the first bracket
+
+Note the way the following is written using the pipe operator. The dataframe is piped to the ggplot function. _data = _ is not strictly necessary, but I like how explicit it is. The '.' simply means 'use the dataframe being piped in'.
+
+```{r}
+diamonds %>% 
+  ggplot(data = .,
+         aes(x = cut)) +
+  geom_bar()
+```
+
+## Continuous
+
+```{r}
+diamonds %>% 
+  ggplot(data = .,
+         aes(x = price))  + 
+  geom_density() +
+  theme_light()
+```
+
+```{r}
+diamonds %>% 
+  ggplot(aes(x = price)) +
+  geom_area(stat = 'bin')
+```
+
+```{r}
+diamonds %>% 
+  sample_n(100) %>% # this is key to avoid over-plotting, without it you can read nothing
+  ggplot(aes(x = table)) + 
+  geom_dotplot()
+
+```
+
+```{r}
+diamonds %>% 
+  ggplot(data = .,
+         aes(x = price, 
+             colour = cut, 
+             fill = cut)) + 
+  geom_histogram(binwidth = 100) +
+  theme_light()
+```
+
+# Two Variables
+
+## Continuous X, Continous Y
+
+```{r}
+diamonds %>%
+  sample_n(200) %>% 
+  ggplot(data = .,
+         aes(x = x, y = y)) +
+  geom_point()
+  # code here
+```
+
+## Continuous X, Discrete Y
+
+```{r}
+diamonds %>%
+  ggplot(aes(x = price, y = clarity)) + 
+  geom_jitter(alpha = 0.1) + # jitter creates artificial randomness to avoid overplotting
+  theme_classic() # alpha is the transparency of each point
+```
+
+
+## Discrete X, Continuous Y
+
+```{r}
+diamonds %>% 
+  ggplot(aes(x = clarity, y = price)) + 
+  geom_boxplot()
+```
+
+
+```{r}
+diamonds %>% 
+  ggplot(aes(x = clarity, y = price)) + 
+  geom_violin()
+```
+
+```{r}
+diamonds %>% 
+  sample_n(nrow(diamonds)/2) %>% 
+  ggplot(aes(x = clarity, y = price)) + 
+  geom_jitter(alpha = 0.2)
+```
+
+## Discrete X, Discrete Y
+
+```{r}
+diamonds %>% 
+  ggplot(aes(x = clarity, y = cut, color = price, fill = price)) + 
+  geom_jitter(alpha = 0.1)
+```
+
+# Further Dimensions
+
+## Color
+
+```{r}
+diamonds %>% 
+  sample_n(nrow(diamonds)/5) %>% 
+  ggplot(aes(x = x, y = y, color = price)) + 
+  geom_point() +
+  scale_color_continuous(type = 'viridis')
+```
+
+## Facets
+
+```{r}
+diamonds %>% 
+  ggplot(aes(x = x, 
+             y = y, 
+             col = price)) + 
+  geom_point() +
+  facet_grid(cut ~ color) +
+  scale_color_continuous(type = 'viridis')
+```
+
+## Size 
+
+```{r}
+diamonds %>% 
+  ggplot(data = ., 
+         aes(x = x, 
+             y = y, 
+             col = price,
+             size = table)) + 
+  geom_point(alpha = .2) + 
+  facet_grid(cut ~ color) +
+  scale_color_continuous(low = "green", 
+                         high = "red") +
+  theme_light()
+```

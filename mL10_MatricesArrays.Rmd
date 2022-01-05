@@ -1,0 +1,50 @@
+---
+title: "mL10_MatricesArrays"
+author: "David M Hannon"
+date: "27/12/2021"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_sections: true
+    code_folding: show
+---
+
+# Matrices
+
+Let's create a matrix.
+
+```{r}
+vec1 <- 1:24   # data for the matrix
+mat1 <- matrix(data = vec1, nrow = 6, ncol = 4, byrow = F)
+mat1
+
+```
+
+# Arrays
+
+Now let's create an array! Itr is like a matrix, but where a natrix has 2 dimensions, an array has >2!
+
+```{r}
+arr1 <- array(data = vec1, dim = c(3, 4, 2)) # i.e. a cube 3x4x2
+arr1
+```
+
+We can ask what the dimensions of an array are. But, we can also use this `dim` 
+command to reshape the dimensions of an array.
+
+```{r}
+dim(arr1)
+
+arr2 <- arr1
+dim(arr2) <- c(2, 2, 6)
+arr2
+```
+
+Let's double check this by checking the dimensions of the arrays.
+
+```{r}
+dim(arr1)
+dim(arr2)
+```
+

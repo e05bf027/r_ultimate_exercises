@@ -1,0 +1,37 @@
+---
+title: "mL18_Loops"
+author: "David M Hannon"
+date: "12/29/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# For loops
+
+```{r}
+sequence <- 1:10
+for (i in sequence) {
+  for (j in sequence) {
+    print(paste(i, ',', j))
+  }
+}
+```
+
+# While loops
+
+```{r}
+final_letter <- 'Z'
+current_letter <- 'A'
+
+while (current_letter != final_letter) {
+  print(current_letter)
+  letter_pos <- which(current_letter == LETTERS)
+  current_letter <- LETTERS[letter_pos + 1]
+}
+
+print(LETTERS[letter_pos + 1])   # for completeness
+```
+
