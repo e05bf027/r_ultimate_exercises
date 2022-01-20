@@ -23,7 +23,7 @@ library(dbscan)
 
 # Introduction
 
-The data set you work with includes shapes, that are easily to distinguish for a human. Your task is to write an algorithm to detect the shapes with an algorithm.
+The data set you work with includes shapes that are easily to distinguish for a human. Your task is to write an algorithm to detect the shapes.
 
 ```{r}
 library(factoextra)
@@ -45,7 +45,8 @@ Create a matrix object of "multishapes".
 Create a kNNdistplot for 5 points.
 
 ```{r}
-# code here
+multi_mat <- as.matrix(multishapes)
+kNNdistplot(multi_mat, k = 5)
 ```
 
 Use the plot to come up with a suitable epsilon parameter. 
@@ -53,14 +54,17 @@ Use the plot to come up with a suitable epsilon parameter.
 Then use dbscan to detect the clusters with this algorithm.
 
 ```{r}
-# code here
+eps <- 0.2
+min_points <- 5
+
+db <- dbscan(x = multi_mat, eps = eps, minPts = min_points)
 ```
 
 
 Assign a new column in "multishapes" based on the clusters that were detected by dbscan.
 
 ```{r}
-# code here
+multishapes$dbscan_cluster <- db$cluster
 ```
 
 Plot the result.
